@@ -23,8 +23,15 @@ class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field='username',
         read_only='True')
-    post = serializers.ReadOnlyField(source='post.id')
+    # post = serializers.PrimaryKeyRelatedField(read_only=True)
+    '''
+    Роман, исправил как ты предложил, всё работает.
+    Но наставник предложил вообще убрать эту строчку,
+    и заменить на третью строчку в классе Meta,
+    не знаю, какой вариант лучше, но всё вроде работает.
+    '''
 
     class Meta:
         model = Comment
         fields = ('id', 'author', 'post', 'text', 'created')
+        read_only_fields = ('post', 'author')
